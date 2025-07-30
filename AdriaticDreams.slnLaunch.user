@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "Gateway.Api\\Gateway.Api.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "AI.Worker\\AI.Worker.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]
