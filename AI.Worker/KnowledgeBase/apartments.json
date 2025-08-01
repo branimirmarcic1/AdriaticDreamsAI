@@ -1,0 +1,29 @@
+﻿[
+	{
+		"id": "apt-sunce",
+		"name": "Apartman Sunce",
+		"location": "Zadar",
+		"capacity": 2,
+		"price_per_night": 80,
+		"details": "Pogled na more, balkon.",
+		"pets_allowed": false
+	},
+	{
+		"id": "apt-bura",
+		"name": "Apartman Bura",
+		"location": "Split",
+		"capacity": 4,
+		"price_per_night": 120,
+		"details": "Blizu centra grada, parking osiguran. Kućni ljubimci su dobrodošli uz nadoplatu od 10 EUR.",
+		"pets_allowed": true
+	},
+	{
+		"id": "villa-maslina",
+		"name": "Villa Maslina",
+		"location": "Rovinj",
+		"capacity": 8,
+		"price_per_night": 300,
+		"details": "Bazen, roštilj, veliko dvorište. Idealno za obitelji.",
+		"pets_allowed": true
+	}
+]

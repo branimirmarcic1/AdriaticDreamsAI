@@ -55,3 +55,4 @@ nunit-*.xml
 /AI.Worker/appsettings.Development.json
 /AI.Worker/appsettings.json
 /docker-compose.yml
+.vs/

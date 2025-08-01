@@ -1,11 +1,20 @@
+using Contracts;
+using Gateway.Api.Consumers;
+using Gateway.Api.Hubs;
 using MassTransit;
-using Contracts; // Dodajte using za naš ugovor
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Konfiguracija MassTransita
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+builder.Services.AddSignalR();
+
 builder.Services.AddMassTransit(x =>
 {
+    x.AddConsumer<AnswerConsumer>();
+
     x.UsingRabbitMq((context, cfg) =>
     {
         cfg.Host("rabbitmq", "/", h => {
@@ -13,13 +22,23 @@ builder.Services.AddMassTransit(x =>
             h.Password("guest");
         });
 
-        cfg.ConfigureEndpoints(context);
+        cfg.ReceiveEndpoint("answer-queue", e =>
+        {
+            e.ConfigureConsumer<AnswerConsumer>(context);
+        });
     });
 });
 
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("ReactAppPolicy", policy =>
+    {
+        policy.WithOrigins("http://localhost:5173")
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials();
+    });
+});
 
 var app = builder.Build();
 
@@ -28,7 +47,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseHttpsRedirection();
+
+app.UseCors("ReactAppPolicy");
+
 app.UseAuthorization();
 app.MapControllers();
+
+app.MapHub<ChatHub>("/chathub");
+
 app.Run();
